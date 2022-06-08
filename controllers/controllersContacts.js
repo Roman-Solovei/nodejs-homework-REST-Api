@@ -21,10 +21,10 @@ const getContacts = async (req, res, next) => {
 const getById = async (req, res, next) => {
     try {
         const { contactId } = req.params;
-        const contact = await getContactById(contactId);
+        const contact = await getContactById(contactId);        
         if (!contact) {
-            res.status(404).json({ message: 'Not Found' })
-        }
+          return res.status(404).json({ message: 'Not Found' })
+        };
         res.status(200).json(contact);
     } catch (error) {
         next(error);
@@ -37,7 +37,7 @@ const postContact = async (req, res, next) => {
         if (error) {
             res.status(400).json({ message: `missing required field (${error.message})` })
             return;
-        }        
+        };      
         const contact = await addContact(req.body);
         res.status(201).json(contact);
     } catch (error) {
