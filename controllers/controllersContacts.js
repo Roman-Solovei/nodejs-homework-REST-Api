@@ -1,4 +1,5 @@
-const { schemaCreate, schemaPatch } = require('../models/contacts')
+const { schemaCreate, schemaPatch } = require('../models/contacts');
+const { createError } = require('../helpers/errors')
 
 const {
   listContacts,
@@ -23,7 +24,7 @@ const getById = async (req, res, next) => {
         const { contactId } = req.params;
         const contact = await getContactById(contactId);        
         if (!contact) {
-          return res.status(404).json({ message: 'Not Found' })
+            throw createError(404, "Not Found")           
         };
         res.status(200).json(contact);
     } catch (error) {
@@ -34,9 +35,8 @@ const getById = async (req, res, next) => {
 const postContact = async (req, res, next) => {
     try {
         const { error } = schemaCreate.validate(req.body);
-        if (error) {
-            res.status(400).json({ message: `missing required field (${error.message})` })
-            return;
+        if (error) {           
+            throw createError(400, `missing field ${error.message}`)            
         };      
         const contact = await addContact(req.body);
         res.status(201).json(contact);
@@ -50,7 +50,7 @@ const delContact = async (req, res, next) => {
         const { contactId } = req.params;
         const contact = await removeContact(contactId);
         if (!contact) {
-            res.status(404).json({ message: 'Not Found' });
+            throw createError(404, "Not Found")            
         }
         res.status(200).json({ message: 'contact deleted' });
         console.log(res)
@@ -63,13 +63,12 @@ const updateContactById = async (req, res, next) => {
     try {
         const { error } = schemaCreate.validate(req.body);
         if (error) {
-            res.status(400).json({ message: `missing fields (${error.message})` })
-            return;
+            throw createError(400, `missing fields (${error.message})`)         
         }
         const { contactId } = req.params;           
         const contact = await updateContact(contactId, req.body);
         if (!contact) {
-            res.status(404).json({ message: 'Not Found' });
+           throw createError(404, "Not Found")  
         }
         res.status(200).json(contact);
     } catch (error) {
@@ -79,16 +78,15 @@ const updateContactById = async (req, res, next) => {
 
 const updateStatusContact = async (req, res, next) => {    
     try {       
-        const { favorite } = req.body;
+        const { favorite } = req.body;   
         const { error } = schemaPatch.validate(req.body);
         if (error) {
-            res.status(400).json({ message: "missing field favorite" })
-            return;
+            throw createError(400, "Missing field favorite")            
         }       
         const { contactId } = req.params;           
-        const contact = await updateContact(contactId, { favorite: `${favorite}` } );
+        const contact = await updateContact(contactId, { favorite: `${favorite}` });    
         if (!contact) {
-            res.status(404).json({ message: 'Not Found' });
+            throw createError(404, "Not Found") 
         }
         res.status(200).json(contact);
     } catch (error) {
