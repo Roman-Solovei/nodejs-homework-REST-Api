@@ -2,10 +2,10 @@ const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 
 const { createError } = require("../helpers/errors");
-const { User } = require("../models/user");
+const { User } = require("../models");
 
-require('dotenv').config();
-const {  SECRET_KEY } = process.env;
+const { SECRET_KEY } = require('../helpers/env');
+
 
 
 const registerUser = async (userData) => {

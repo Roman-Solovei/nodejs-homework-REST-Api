@@ -52,8 +52,7 @@ const delContact = async (req, res, next) => {
         if (!contact) {
             throw createError(404, "Not Found")            
         }
-        res.status(200).json({ message: 'contact deleted' });
-        console.log(res)
+        res.status(200).json({ message: 'Contact deleted' });      
     } catch (error) {
         next(error);
     }

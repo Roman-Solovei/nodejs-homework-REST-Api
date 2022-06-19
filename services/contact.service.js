@@ -1,5 +1,5 @@
 
-const { Contact } = require("../models/contacts");
+const { Contact } = require("../models");
 
 
 const listContacts = async (query) => {   

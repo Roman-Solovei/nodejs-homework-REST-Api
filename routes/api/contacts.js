@@ -1,10 +1,10 @@
 const express = require('express');
 const router = express.Router();
-const { getContacts, getById, postContact, delContact, updateContactById, updateStatusContact } = require('../../controllers/controllersContacts');
-const { validateRequest } = require("../../middlewares/validateRequest");
-const { validateId } = require("../../middlewares/verifyId");
-const { auth, author } = require("../../middlewares/auth");
-const { schemaCreate, schemaPatch, schemaUpdate } = require("../../models/contacts");
+const { getContacts, getById, postContact, delContact, updateContactById, updateStatusContact } = require('../../controllers');
+const { validateRequest } = require("../../middlewares");
+const { validateId } = require("../../middlewares");
+const { auth, author } = require("../../middlewares");
+const { schemaCreate, schemaPatch, schemaUpdate } = require("../../models");
 
 
 router.get('/', auth, getContacts);

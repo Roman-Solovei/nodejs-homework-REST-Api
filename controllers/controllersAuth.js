@@ -45,7 +45,6 @@ const logoutUser = async (req, res, next) => {
 
 const subscriptionUpdate = async (req, res, next) => {
 
-    // const subscription = req.user.subscription;
     const id = req.user._id;
 
     try {
