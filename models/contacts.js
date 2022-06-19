@@ -45,6 +45,13 @@ const schemaPatch = Joi.object({
 });
 
 
+const schemaUpdate = Joi.object({   
+    name: Joi.string().min(3).required(),
+    email: Joi.string().required(),
+    phone: Joi.string().min(5).max(15).pattern(/^\(?(\d{3})\)?[- ]?(\d{3})[- ]?(\d{4})$/).required(),
+});
+
+
 module.exports = {
-  Contact, schemaCreate, schemaPatch
+  Contact, schemaCreate, schemaPatch, schemaUpdate
 };

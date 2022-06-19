@@ -68,7 +68,7 @@ const authenticateUser = async (token) => {
     try {
         const payload = jwt.verify(token, SECRET_KEY);
         const { id } = payload;
-        const user = await User.findById(id);
+        const user = await User.findById(id);        
 
         return user.token !== token ? null : user;
     } catch (e) {

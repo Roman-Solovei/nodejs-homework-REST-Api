@@ -1,19 +1,20 @@
 const { authenticateUser } = require("../services/auth.service");
-const authError = { status: 401, message: "Unauthorized" };
+// const authError = { status: 401, message: "Unauthorized" };
+const { createError } = require("../helpers/errors");
 
 
 
 const auth = async (req, res, next) => {
-     const {authorization = ""} = req.headers;
-     const [bearer, token] = authorization.split(' ');
+    const {authorization = ""} = req.headers;
+    const [bearer, token] = authorization.split(" ");   
 
     if (bearer !== 'Bearer' || !token) {
-        next(authError);
+        next(createError(401, "Unauthorized"));
     };
 
     const user = await authenticateUser(token);
     if (!user) {
-      next(authError);
+       next(createError(401, "Unauthorized"));
     };
 
     req.user = user;
@@ -23,7 +24,7 @@ const auth = async (req, res, next) => {
 const author = (subscription) => {
     return (req, res, next) => {
         if (req.user.subscription !== subscription) {
-            next({ status: 401, message: "Not authorized" })
+            next(createError(401, "User rights limit"))
         }
         next();
     }
