@@ -12,7 +12,7 @@ const {
 
 const getContacts = async (req, res, next) => {
     try {
-        const allContacts = await listContacts();
+        const allContacts = await listContacts(req.query);
         res.json(allContacts);
     } catch (error) {
         next(error);
