@@ -42,13 +42,15 @@ const loginUser = async ({ email, password }) => {
         id: user._id,
         email: user.email,
         subscription: user.subscription,
-    };    
+    }; 
+    
+    const subscription = user.subscription;
 
-    const token = jwt.sign(payload, SECRET_KEY, { expiresIn: '1h' });   
+    const token = jwt.sign(payload, SECRET_KEY, { expiresIn: '7d' });   
     await User.findByIdAndUpdate(user._id, { token });
 
     return {
-        token
+        token, subscription
     };
 };
 

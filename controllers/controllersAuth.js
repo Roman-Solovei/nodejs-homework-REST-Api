@@ -9,6 +9,7 @@ const registerUser = async (req, res, next) => {
             email: user.email,
             subscription: user.subscription,
             id: user._id,
+            avatarURL: user.avatarURL,
         });
     } catch (error) {
         next(error)
@@ -18,13 +19,13 @@ const registerUser = async (req, res, next) => {
 
 const loginUser = async (req, res, next) => {
     try {
-        const token = await authService.loginUser(req.body);    
+        const { token, subscription } = await authService.loginUser(req.body);  
         res.status(200).json({
         status: 'success',        
         token,       
         user: {
             email: (req.body.email),
-            subscription: "starter"
+            subscription: subscription,
   }
   });
     } catch (error) {

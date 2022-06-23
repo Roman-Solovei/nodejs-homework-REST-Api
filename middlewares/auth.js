@@ -1,5 +1,4 @@
 const { authenticateUser } = require("../services/auth.service");
-// const authError = { status: 401, message: "Unauthorized" };
 const { createError } = require("../helpers/errors");
 
 
