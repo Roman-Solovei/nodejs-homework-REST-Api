@@ -13,23 +13,23 @@ describe('Login', () => {
     });
 
     test('User should login with correct creds', async () => {
-        const next = jest.fn();       
+        const next = jest.fn();
         const req = {
             body: {
-                email: "email@gmail.com",                   
-                }
-        };       
+                email: "email@gmail.com",
+            }
+        };
         const res = {
             status: jest.fn().mockReturnThis(),
             json: jest.fn((data) => data),
-            };
+        };
 
         authService.loginUser = jest.fn(() => {
             return {
                 token: 'test-jwt-token',
                 subscription: 'starter',
-                }
-            });
+            }
+        });
 
         const result = await authController.login(req, res, next);
         console.log(result);
@@ -37,6 +37,8 @@ describe('Login', () => {
         expect(result.code).toBe(200);
         expect(result.data.token).toBe('test-jwt-token');
         expect(result.data.user.subscription).toBe('starter');
+        expect(typeof result.data.user.email).toBe("string");
+        expect(typeof result.data.user.subscription).toBe("string");
         
-        });
-    })
+    });
+});
