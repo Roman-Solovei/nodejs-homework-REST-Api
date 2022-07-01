@@ -29,19 +29,20 @@ const registerUser = async (userData) => {
 const loginUser = async ({ email, password }) => {
     const user = await User.findOne({email: email});
     
-    if (!user) {
-        throw createError(400, `User ${email} not found`);
+     if(user && !user.verify) {
+        throw createError(401, 'Please confirm your email.')
     };
 
     const isValid = await bcrypt.compare(password, user.password)
     if (!isValid) {
         throw createError(400, "Enter valid password");
-    };
+    };   
 
     const payload = {
         id: user._id,
         email: user.email,
         subscription: user.subscription,
+
     }; 
     
     const subscription = user.subscription;
