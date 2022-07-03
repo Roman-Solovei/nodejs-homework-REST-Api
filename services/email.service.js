@@ -3,8 +3,8 @@ const BASE_URL = `http://localhost:${PORT}/api/v1`;
 
 
 const nodemailer = require("nodemailer");
-let aws = require("@aws-sdk/client-ses");
-let { defaultProvider } = require("@aws-sdk/credential-provider-node");
+const aws = require("@aws-sdk/client-ses");
+const { defaultProvider } = require("@aws-sdk/credential-provider-node");
 
 
 const ses = new aws.SES({
@@ -13,8 +13,8 @@ const ses = new aws.SES({
     defaultProvider,
 });
 
-// create Nodemailer SES transporter
-let transporter = nodemailer.createTransport({
+
+const transporter = nodemailer.createTransport({
     SES: { ses, aws },
 });
 
@@ -25,7 +25,7 @@ const sendEmail   = async (userEmail, code) => {
         await transporter.sendMail(
             {
                 to: userEmail,
-                from: 'romario2409@gmail.com', // can be stored in envs
+                from: 'romario2409@gmail.com',
                 subject: 'Confirm your email',
                 html: `<h4>Click on this link to confirm registration ${link}</h4>`,
             }
